@@ -1,0 +1,70 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+env/
+venv/
+*.env
+*.log
+
+# Django/SQLite
+*.sqlite3
+*.db
+media/
+staticfiles/
+
+# VS Code / IDE
+.vscode/
+.idea/
+
+# Migrations (опционально)
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# Coverage / test
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+
+# Docker
+*.pid
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+
+# venv
+venv/
+env/
+.env
+
+# Git
+.git
+.gitignore
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Tests
+tests/
+
+# IDE
+.vscode/
+.idea/
+
+# Build files
+build/
+dist/
+*.egg-info/
+
+# Media/static (если собираются отдельно)
+media/
+staticfiles/

@@ -1,0 +1,77 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  angular:
+    build:
+      context: ./wolt-copy
+      dockerfile: Dockerfile
+    container_name: angular_build
+    volumes:
+      - angular_dist:/app
+    
+  django:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: django_app
+    environment:
+      - DB_HOST=postgres
+      - POSTGRES_DB=mydatabase
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - DB_PORT=5432
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - app-network
+    
+  redis:
+    image: redis:alpine
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+  nginx:
+    build:
+      context: ./wolt-copy
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./wolt-copy/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
+    depends_on:
+      - angular
+
+volumes:
+  angular_dist:
+    driver: local
+  postgres_data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
