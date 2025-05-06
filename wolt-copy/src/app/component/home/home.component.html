@@ -1,0 +1,63 @@
+
+  <div class="home-container">
+    <h1 class="title">🚀 Welcome to the <strong>delivery</strong></h1>
+  
+    <div class="header-actions">
+      <a class="profile-link" routerLink="/profile">👤 Profile</a>
+    </div>
+  
+    <div class="search-box">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="🔍 Search by name..."
+        
+
+      />
+      <button (click)="search()"
+      [routerLink]="['/']"
+      >Search</button>
+    </div>
+  
+    <h2 class="section-title">🍽️ Categories</h2>
+    <div class="categories">
+      <button *ngFor="let cat of categories"
+              [routerLink]="['/']"
+              [queryParams]="{ category: cat.value }"
+              (click)="categoryFilter(cat.value)">
+        {{ cat.name }}
+      </button>
+
+      <button (click)="clearFilters()" [routerLink]="['/']">ClearFilters</button>
+    </div>
+  
+    <h2 class="section-title">📍 Restaurant map</h2>
+    <google-map height="400px" width="100%" [center]="center" [zoom]="13">
+      <map-marker
+      *ngFor="let marker of markers"
+      [position]="marker.position"
+      [title]="marker.title"
+      (mapClick)="openModal(marker)">
+
+    </map-marker>
+    </google-map>
+    <div class="modal" *ngIf="selectedRestaurant">
+      <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <h2>{{ selectedRestaurant.title || 'No info available now' }}</h2>
+        <p>{{ selectedRestaurant.description || 'No info available now' }}</p>
+        <h3>Reviews:</h3>
+        <ul>
+          <li *ngFor="let review of selectedRestaurant.reviews">
+            {{ review.comment || 'No info available now' }}
+            {{ review.rating || 'No info available now' }} ★
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="section-title">🥘 Best Restaurants</h2>
+
+    <app-restaurant-list [restaurants]="filteredRestaurants" />
+  </div>
+  

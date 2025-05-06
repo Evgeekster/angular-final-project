@@ -1,0 +1,93 @@
+<!-- 
+
+<div *ngIf="restaurant" class="restaurant-container">
+  <a routerLink="/" class="home-link">🏠 Home</a>
+    <h1>{{ restaurant.name }}</h1>
+    <p><strong>Location:</strong> {{ restaurant.location }}</p>
+    <p><strong>Rating:</strong> ★{{ restaurant.rating }}</p>
+    <p><strong>Category:</strong> {{ restaurant.category }}</p>
+
+    <h2 class="section-title">🍽️ Menu</h2>
+    <div *ngIf="menu && menu.length; else noMenu">
+      <ul class="menu-list">
+        <li *ngFor="let item of menu">
+          <h4>{{ item.name }}</h4>
+          <p>{{ item.description }}</p>
+          <p><strong>Price:</strong> {{ item.price | currency }}</p>
+          <button (click)="addToCart(item)">🛒 Add to Cart</button>
+          <div *ngIf="{checkOnCart: checkOnCart(item)} as cartCheck">
+            <p *ngIf="cartCheck">Item already in cart!</p>
+            <p *ngIf="!cartCheck">Item not in cart!</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <ng-template #noMenu>
+      <p>No menu available for this restaurant.</p>
+    </ng-template>
+
+    <h2 class="section-title">💬 Reviews</h2>
+    <div *ngIf="reviews && reviews.length; else noReviews">
+      <ul class="reviews-list">
+        <li *ngFor="let review of reviews">
+          <p><strong>{{ review.added_by }}</strong> ({{ review.created_at | date:'shortDate' }})</p>
+          <p>Rating: ★{{ review.rating }}</p>
+          <p>{{ review.comment }}</p>
+        </li>
+      </ul>
+    </div>
+    <ng-template #noReviews>
+      <p>No reviews available for this restaurant.</p>
+    </ng-template>
+  </div> -->
+
+
+  <div *ngIf="restaurant" class="restaurant-container">
+    <a routerLink="/" class="home-link">🏠 Home</a>
+    <h1>{{ restaurant.name }}</h1>
+    <p><strong>Location:</strong> {{ restaurant.location }}</p>
+    <p><strong>Rating:</strong> ★{{ restaurant.rating }}</p>
+    <p><strong>Category:</strong> {{ restaurant.category }}</p>
+  
+    <h2 class="section-title">🍽️ Menu</h2>
+    <div *ngIf="menu && menu.length; else noMenu">
+      <ul class="menu-list">
+        <li *ngFor="let item of menu">
+          <h4>{{ item.name }}</h4>
+          <p>{{ item.description }}</p>
+          <p><strong>Price:</strong> {{ item.price | currency }}</p>
+          <button (click)="addToCart(item)">🛒 Add to Cart</button>
+  
+          <div *ngIf="checkOnCart(item.id)">
+            <p>Item already in cart!</p>
+          </div>
+          <div *ngIf="!checkOnCart(item.id)">
+            <p>Item not in cart!</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <ng-template #noMenu>
+      <p>No menu available for this restaurant.</p>
+    </ng-template>
+  
+    <h2 class="section-title">💬 Reviews</h2>
+    <div *ngIf="reviews && reviews.length; else noReviews">
+      <ul class="reviews-list">
+        <li *ngFor="let review of reviews">
+          <p><strong>{{ review.added_by }}</strong> ({{ review.created_at | date:'shortDate' }})</p>
+          <p>Rating: ★{{ review.rating }}</p>
+          <p>{{ review.comment }}</p>
+          <button *ngIf="review.added_by_id === currentUserId" (click)="deleteReview(review.id)">
+            Delete review
+          </button>
+        </li>
+      </ul>
+    </div>
+    <ng-template #noReviews>
+      <p>No reviews available for this restaurant.</p>
+    </ng-template>
+  
+    <app-cart [restaurantId]="restaurant.id"></app-cart> 
+  
+  </div>

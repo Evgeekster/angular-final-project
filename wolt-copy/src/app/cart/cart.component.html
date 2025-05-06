@@ -1,0 +1,42 @@
+<div class="cart-container">
+    <h1>🛒 Shopping Cart</h1>
+  
+    <div class="cart-items">
+      <div 
+        class="cart-item" 
+        *ngFor="let item of cartItems" 
+        >
+        
+        <p><strong>{{item.name}}</strong></p>
+  
+        <div class="item-details">
+          <p>Price: {{ item.price | currency }}</p>
+          <p>Quantity: {{ item.quantity }}</p>
+        </div>
+  
+        <button (click)="removeItem(item)">❌ Remove</button>
+      </div>
+    </div>
+  
+    <div *ngIf="cartItems.length > 0" class="cart-summary">
+      <h2>Total: {{ total | currency }}</h2>
+      <button (click)="submitOrder()">✅ Checkout</button>
+      <button (click)="clearCart()" class="clear-button">🗑️ Clear Cart</button>
+    </div>
+  
+    <div *ngIf="cartItems.length === 0" class="empty-cart">
+      <p>Your cart is empty 😢</p>
+    </div>
+
+
+    <div *ngIf="showModal" class="modal">
+      <div class="modal-content">
+        <h2>Заказ успешно оформлен!</h2>
+        <p>Ожидаемое время доставки: {{ deliveryTime }} минут</p>
+        <p>Оставшееся время: {{ countdown  }}</p>
+        <button (click)="closeModal()">Закрыть</button>
+      </div>
+    </div>
+
+  </div>
+  

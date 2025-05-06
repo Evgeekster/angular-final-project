@@ -1,0 +1,49 @@
+   <div *ngFor="let order of orders" class="order-card">
+    <h3>Order №{{ order.id }} — {{ order.restaurant }}</h3>
+    <p>Date: {{ order.order_date }}</p>
+    <p>Status: {{ order.status }}</p>
+    <p>Address: {{ order.delivery_address }}</p>
+    <p>Total price: {{ order.total_price }}₽</p>
+  
+    <div *ngIf="order.status === 'pending'">
+      <div *ngIf="getCountdownForOrder(order.id) as countdown$">
+        <ng-container *ngIf="(countdown$ | async) as countdown">
+          <p class="timer-text">Delivery in: {{ formatCountdown(countdown) }}</p>
+    
+          <div *ngIf="countdown > 0">
+            <button (click)="cancelOrder(order.id)">Cancel Order</button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  
+    <h4>Items:</h4>
+    <ul>
+      <li *ngFor="let item of order.items">
+        {{ item.name }} — {{ item.quantity }} × {{ item.price }}₽
+      </li>
+    </ul>
+  </div>
+  
+  <div *ngIf="showReviewModal" class="modal-overlay">
+    <div class="modal">
+      <h2>Thank you for your order!</h2>
+      <p>Restaurant: {{ currentOrderForReview?.restaurant }}</p>
+      <div class="rating-stars">
+        <span 
+          *ngFor="let star of [1,2,3,4,5]" 
+          (click)="reviewRating = star" 
+          (mouseover)="hoveredRating = star"
+          (mouseleave)="hoveredRating = 0"
+          [class.filled]="star <= (hoveredRating || reviewRating)">
+          ★
+        </span>
+      </div>
+      <textarea placeholder="Leave your feedback..." [(ngModel)]="reviewText"></textarea>
+      <div class="modal-buttons">
+        <button (click)="submitReview()">Send Review</button>
+        <button (click)="closeReviewModal()">Close</button>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,72 @@
+
+<!-- 
+  <div class="profile-container">
+    <div class="profile-icon">👤</div>
+    <div class="profile-title">Profile</div>
+  
+    <div class="profile-info">
+      <p><span>Username:</span> {{user.username || "None"}}</p>
+      <p><span>Phone:</span> {{user.phone_number ||"None"}}</p>
+      <p><span>Address:</span> None</p>
+      <p><span>Email:</span> None</p>
+    
+    </div>
+  
+    <a routerLink="/" class="home-link">🏠 Home</a>
+  </div>
+  <app-orders></app-orders> -->
+
+  <div class="profile-container">
+    <div class="profile-icon">👤</div>
+    <div class="profile-title">Profile</div>
+  
+    <div class="profile-info">
+      <p><span>Username:</span> {{ user.username || "None" }}</p>
+      <p><span>Phone:</span> {{ user.phone_number || "None" }}</p>
+      <p><span>Address:</span> {{ user.address || "None" }}</p>
+      <p><span>Email:</span> {{ user.email || "None" }}</p>
+    </div>
+  
+    <button  class="openModalBtn" (click)="openEditModal()">✏️ Edit Profile</button>
+  
+    <a routerLink="/" class="home-link">🏠 Home</a>
+  </div>
+  
+  <div class="modal" *ngIf="editModalOpen">
+    <div class="modal-content">
+      <span class="close" (click)="closeEditModal()">&times;</span>
+      <h2>Edit Profile</h2>
+  
+      <form (ngSubmit)="submitEdit()">
+        <div class="form-group">
+          <label for="phone_number">Phone:</label>
+          <input
+            type="text"
+            id="phone_number"
+            [(ngModel)]="user.phone_number"
+            name="phone_number"
+            placeholder="enter your phone number"
+            required
+          />
+        </div>
+  
+        <div class="form-group">
+          <label for="address">Address:</label>
+          <textarea
+            id="address"
+            [(ngModel)]="user.address"
+            name="address"
+            placeholder="enter your address"
+            required
+          ></textarea>
+        </div>
+  
+        <button type="submit">💾 Save</button>
+      </form>
+  
+      <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    </div>
+  </div>
+  
+  <app-orders></app-orders>

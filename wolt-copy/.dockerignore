@@ -1,0 +1,32 @@
+# Node
+
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+pnpm-lock.yaml
+
+# Angular build output
+dist/
+out-tsc/
+.angular/
+.tmp/
+coverage/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Environment files (если не нужны в продакшене)
+*.env
+*.local
+*.example

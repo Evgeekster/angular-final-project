@@ -1,0 +1,17 @@
+<div class="register-container">
+    <h2>Registation</h2>
+    
+    <form (ngSubmit)="register()">
+      <input [(ngModel)]="username" name="username" placeholder="username" required>
+      <input [(ngModel)]="email" name="email" type="email" placeholder="Email" required>
+      <input [(ngModel)]="password" name="password" type="password" placeholder="password" required>
+      <input [(ngModel)]="confirmPassword" name="confirmPassword" type="password" placeholder="repeat password" required>
+  
+      <button type="submit">Register</button>
+    </form>
+    <p class="terms">By pressing "Register", you agree with our <a href="#">Terms of Usage</a> and <a href="#">Confidential Policy</a>.</p>
+    <p class="login-link">Alerady have an account? <a routerLink="/auth">sign in</a></p>
+    <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+  </div>
+  
